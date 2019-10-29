@@ -1,0 +1,44 @@
+.container {
+ margin-top: 30px;
+ height: 800;
+ background-color: yellow;
+}
+
+body {
+    background-image: url("../images/greek-vase.png");
+}
+
+h1 {
+    color: black;
+}
+
+.btn {
+    padding-bottom: -50px;
+    margin-top: auto;
+    width: 200px;
+    height: 50px;
+    margin-bottom: 267px;
+}
+
+.answers {
+
+    padding-top: 30px;
+    margin-bottom: 200px;
+
+}   
+
+.answer1:hover {
+    background-color: blue;
+}
+
+.answer2:hover {
+    background-color: blue;
+}
+
+.answer3:hover {
+    background-color: blue;
+}
+
+.answer4:hover {
+    background-color: blue;
+}

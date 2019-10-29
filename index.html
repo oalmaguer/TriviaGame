@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia</title>
+</head>
+<body>
+
+    <div class="container container-yellow">
+        <div class="row">
+            <div class="col-12 triviaTitle text-center">
+                <div class="content">
+                <h1 class="display-3 text-center">Trivia Game</h1>
+                <h2 class="questionAsked"></h2>
+                <h2 class="timer"></h2>
+                <div class="answers">
+                <h3 class="answer1"></h3>
+                <h3 class="answer2"></h3>
+                <h3 class="answer3"></h3>
+                <h3 class="answer4"></h3>
+            </div>
+                </div>
+                <div class="btnDiv">
+                <button class="btn btn-dark text-center">Start</button>
+            </div>
+            
+            </div>
+        </div>
+    </div>
+    <script>
+       // render div
+       $(document).ready(function(){
+        function answerChoice() {
+            
+            $(".answer1").click(function(){
+                $(this).data("clicked", true);
+            })
+
+            if ($(".answer1").data("clicked")) {
+                alert("Right");
+            } 
+
+        }
+
+       let questions = ["What is your name", "Who invented oreo cookies", "Who invented coffee"];
+        
+        timeR = "";
+        number1 = "Oliver";
+        number2 = "Miguel";
+        number3 = "John";
+        number4 = "Roberto";
+        // lower the margin bottom of button
+        $(".btn").on("click", function() {
+            $(".btn").remove();
+            
+            count();
+            answerChoice();
+            $(".questionAsked").append(questions[0]);
+            $(".timer").append("Hi");
+            $(".answer1").append("<h1>"+number1+"</h1>");
+            $(".answer2").append("<h1>"+number2+"</h1>");
+            $(".answer3").append("<h1>"+number3+"</h1>");
+            $(".answer4").append("<h1>"+number4+"</h1>");
+        })
+
+        
+        
+        
+        function count() {
+                
+               var timeLeft = 3;
+               var downloadTimer = setInterval(function() {
+                   console.log(timeLeft.toString());
+                   $(".timer").text("You got " +timeLeft.toString()+" seconds left");
+                    timeLeft--;
+                    if(timeLeft <= "-1") {
+                        clearInterval(downloadTimer);
+                        $(".timer").text("Finished");
+                    }
+               }, 1000);
+
+            }
+
+        });
+
+        //click clear
+        //render question
+
+    </script>
+</body>
+</html>
