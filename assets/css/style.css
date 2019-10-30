@@ -17,28 +17,29 @@ h1 {
     margin-top: auto;
     width: 200px;
     height: 50px;
-    margin-bottom: 267px;
+    margin-bottom: 258px;
 }
 
 .answers {
 
     padding-top: 30px;
     margin-bottom: 200px;
+    font-size: 30px;
 
 }   
 
-.answer1:hover {
+#answer1:hover {
     background-color: blue;
 }
 
-.answer2:hover {
+#answer2:hover {
     background-color: blue;
 }
 
-.answer3:hover {
+#answer3:hover {
     background-color: blue;
 }
 
-.answer4:hover {
+#answer4:hover {
     background-color: blue;
 }

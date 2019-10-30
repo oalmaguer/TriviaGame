@@ -1,96 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Trivia</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="container container-yellow">
-        <div class="row">
-            <div class="col-12 triviaTitle text-center">
-                <div class="content">
-                <h1 class="display-3 text-center">Trivia Game</h1>
-                <h2 class="questionAsked"></h2>
-                <h2 class="timer"></h2>
-                <div class="answers">
-                <h3 class="answer1"></h3>
-                <h3 class="answer2"></h3>
-                <h3 class="answer3"></h3>
-                <h3 class="answer4"></h3>
+      <div class="row">
+        <div class="col-12 triviaTitle text-center">
+          <div class="content">
+            <h1 class="display-3 text-center">Trivia Game</h1>
+            <h2 class="questionAsked"></h2>
+            <h2 class="timer"></h2>
+            <div class="answers">
+              <h3 id="answer1"></h3>
+              <h3 id="answer2"></h3>
+              <h3 id="answer3"></h3>
+              <h3 id="answer4"></h3>
             </div>
-                </div>
-                <div class="btnDiv">
-                <button class="btn btn-dark text-center">Start</button>
-            </div>
-            
-            </div>
+          </div>
+          <div class="btnDiv">
+            <button class="btn btn-dark text-center">Start</button>
+          </div>
         </div>
+      </div>
     </div>
     <script>
-       // render div
-       $(document).ready(function(){
-        function answerChoice() {
-            
-            $(".answer1").click(function(){
-                $(this).data("clicked", true);
-            })
+      // render div
+      $(document).ready(function() {
+       
 
-            if ($(".answer1").data("clicked")) {
-                alert("Right");
-            } 
-
-        }
-
-       let questions = ["What is your name", "Who invented oreo cookies", "Who invented coffee"];
-        
-        timeR = "";
-        number1 = "Oliver";
-        number2 = "Miguel";
-        number3 = "John";
-        number4 = "Roberto";
+        let queryURL =
+          "https://opentdb.com/api.php?amount=10&type=multiple";
         // lower the margin bottom of button
         $(".btn").on("click", function() {
-            $(".btn").remove();
+          $(".btn").hide();
+        
+          var questionCounter = 0;
+          var score = 0;
+          $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function(response) {
             
+            questionAnswer();
+            btnRepeat();
             count();
-            answerChoice();
-            $(".questionAsked").append(questions[0]);
-            $(".timer").append("Hi");
-            $(".answer1").append("<h1>"+number1+"</h1>");
-            $(".answer2").append("<h1>"+number2+"</h1>");
-            $(".answer3").append("<h1>"+number3+"</h1>");
-            $(".answer4").append("<h1>"+number4+"</h1>");
-        })
+            
 
-        
-        
-        
-        function count() {
+            function questionAnswer() {
+              randomNumber = Math.floor(Math.random() * 10);
+              console.log(response);
+              console.log(randomNumber);
+              var result = response.results[randomNumber].question;
+              for (let i = 0; i < 3; i++) {
+                var wrongAnswers =
+                  response.results[randomNumber].incorrect_answers[i];
+                var correctAnswer =
+                  response.results[randomNumber].correct_answer;
+                var myJSON2 = JSON.stringify(wrongAnswers);
+                var myJSON3 = JSON.stringify(correctAnswer);
+                console.log(myJSON3);
+
+                var correct = "correct";
+                var incorrect = "incorrect";
+                var score = 0;
+                var questionCounter = 0;
                 
-               var timeLeft = 3;
-               var downloadTimer = setInterval(function() {
-                   console.log(timeLeft.toString());
-                   $(".timer").text("You got " +timeLeft.toString()+" seconds left");
-                    timeLeft--;
-                    if(timeLeft <= "-1") {
-                        clearInterval(downloadTimer);
-                        $(".timer").text("Finished");
-                    }
-               }, 1000);
 
+                $(".answers").append(
+                  '<input type="radio" name="rbtnCount" value=' +
+                    incorrect +
+                    ">" +
+                    myJSON2 +
+                    "</br>"
+                );
+              }
+              $(".answers").append(
+                '<input type="radio" name="rbtnCount" value=' +
+                  correct +
+                  ">" +
+                  myJSON3
+              );
+              var radioBtn = $('<input type="radio" name="rbtnCount" />');
+
+              var myJSON = JSON.stringify(result);
+              console.log(result);
+              console.log(myJSON2);
+              $(".questionAsked").append("<h1>" + myJSON + "</h1>");
+
+              $(".answers").append(
+                "<br>" + "<button>" + "Submit Answer" + "</button>"
+              );
+
+              $("button:first").addClass("answerBtn");
             }
 
+            function btnRepeat() {
+              $(".answerBtn").on("click", function() {
+                
+               
+                let answerValue = $(
+                  ".answers [name='rbtnCount']:checked"
+                ).val();
+                console.log(answerValue);
+                if (answerValue == "correct") {
+                  stop();
+                  count();
+                  score++;
+                  questionCounter++;
+                  $(".questionAsked").empty();
+                  $(".answers").empty();
+                  $("button:first").empty();
+                  if (questionCounter == "5") {
+                      stop();
+                      alert("Finish");
+                      $(".questionAsked").text("Congratulations");
+                      $(".answers").text("You have " +score+" right answers");
+
+                  } else {
+                  console.log(questionCounter);
+                  $(".answers").append("<h4>Score " + score + "</h4");
+                  console.log("question number "+questionCounter);
+                  questionAnswer();
+                  btnRepeat();
+                  }
+                } else  {
+                  stop();
+                  count();
+                  questionCounter++;
+                  $(".questionAsked").empty();
+                  $(".answers").empty();
+                  $("button:first").empty();
+                  if (questionCounter == "5") {
+                        stop();
+                      alert("Finish");
+                      $(".questionAsked").text("Congratulations");
+                      $(".answers").text("You have " +score+" right answers");
+
+                  } else {
+                  console.log(questionCounter);
+                  $(".answers").append("<h4>Score " + score + "</h4");
+                  console.log("question number "+questionCounter);
+                  questionAnswer();
+                  btnRepeat();
+                  }
+                } 
+              });
+            }
+
+            var counter;
+            function count() {
+              counter = setTimeout(function() {
+                alert("Times up, next question");
+                questionCounter++;
+                stop();
+                count();
+                $(".questionAsked").empty();
+                $(".answers").empty();
+                $("button:first").empty();
+                $(".answers").append("<h4>Score " + score + "</h4");
+                questionAnswer();
+                btnRepeat();
+              }, 10000); // end function
+            }
+            
+            function stop() {
+              clearTimeout(counter);
+            
+        }
+
+            
+
+           
+          }); //end of ajax request
         });
+      });
 
-        //click clear
-        //render question
 
+      // dont repeat the same question
+      // when 7 questions have passed show result and new text
+      //click clear
+      //render question
     </script>
-</body>
+  </body>
 </html>
