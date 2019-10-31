@@ -32,32 +32,26 @@
           <div class="btnDiv">
             <button class="btn btn-dark text-center">Start</button>
           </div>
-          
         </div>
       </div>
     </div>
     <script>
       // render div
       $(document).ready(function() {
-       
-
-        let queryURL =
-          "https://opentdb.com/api.php?amount=50&type=multiple";
+        let queryURL = "https://opentdb.com/api.php?amount=50&type=multiple";
         // lower the margin bottom of button
         $(".btn").on("click", function() {
           $(".btn").hide();
-        
+
           var questionCounter = 0;
           var score = 0;
           $.ajax({
             url: queryURL,
             method: "GET"
           }).then(function(response) {
-            
             questionAnswer();
             btnRepeat();
             count();
-            
 
             function questionAnswer() {
               randomNumber = Math.floor(Math.random() * 50);
@@ -86,24 +80,24 @@
                     "</br>"
                 );
               }
-
-              randomNumber2 = Math.floor(Math.random() * 2 +1);
+              //randomizing answers
+              randomNumber2 = Math.floor(Math.random() * 2 + 1);
               if (randomNumber2 == "2") {
-                var random2 =  $(".answers").append(
-                '<input type="radio" name="rbtnCount" value=' +
-                  correct +
-                  ">" +
-                  myJSON3 +
-                  "</br>"
-              );
+                var random2 = $(".answers").append(
+                  '<input type="radio" name="rbtnCount" value=' +
+                    correct +
+                    ">" +
+                    myJSON3 +
+                    "</br>"
+                );
               } else {
-                var random2 =  $(".answers").prepend(
-                '<input type="radio" name="rbtnCount" value=' +
-                  correct +
-                  ">" +
-                  myJSON3 +
-                  "</br>"
-              );
+                var random2 = $(".answers").prepend(
+                  '<input type="radio" name="rbtnCount" value=' +
+                    correct +
+                    ">" +
+                    myJSON3 +
+                    "</br>"
+                );
               }
               var radioBtn = $('<input type="radio" name="rbtnCount" />');
 
@@ -121,8 +115,6 @@
 
             function btnRepeat() {
               $(".answerBtn").on("click", function() {
-                
-               
                 let answerValue = $(
                   ".answers [name='rbtnCount']:checked"
                 ).val();
@@ -136,20 +128,26 @@
                   $(".answers").empty();
                   $("button:first").empty();
                   if (questionCounter == "5") {
-                      stop();
-                      alert("Finish");
-                      $(".questionAsked").text("Congratulations");
-                      $(".answers").append("You have " +score+" right answers");
-                      $(".answers").append($('<img>',{id:'theImg',src:'../TriviaGame/assets/images/theoffice.gif'}))
-
+                    stop();
+                    alert("Finish");
+                    $(".questionAsked").text("Congratulations");
+                    $(".answers").append(
+                      "You have " + score + " right answers"
+                    );
+                    $(".answers").append(
+                      $("<img>", {
+                        id: "theImg",
+                        src: "../TriviaGame/assets/images/theoffice.gif"
+                      })
+                    );
                   } else {
-                  console.log(questionCounter);
-                  
-                  console.log("question number "+questionCounter);
-                  questionAnswer();
-                  btnRepeat();
+                    console.log(questionCounter);
+
+                    console.log("question number " + questionCounter);
+                    questionAnswer();
+                    btnRepeat();
                   }
-                } else  {
+                } else {
                   stop();
                   count();
                   questionCounter++;
@@ -157,20 +155,24 @@
                   $(".answers").empty();
                   $("button:first").empty();
                   if (questionCounter == "5") {
-                        stop();
-                      alert("Finish");
-                      $(".questionAsked").text("Congratulations");
-                      $(".answers").text("You have " +score+" right answers");
-                      $(".answers").append($('<img>',{id:'theImg',src:'../TriviaGame/assets/images/theoffice.gif'}))
-
+                    stop();
+                    alert("Finish");
+                    $(".questionAsked").text("Congratulations");
+                    $(".answers").text("You have " + score + " right answers");
+                    $(".answers").append(
+                      $("<img>", {
+                        id: "theImg",
+                        src: "../TriviaGame/assets/images/theoffice.gif"
+                      })
+                    );
                   } else {
-                  console.log(questionCounter);
-                  
-                  console.log("question number "+questionCounter);
-                  questionAnswer();
-                  btnRepeat();
+                    console.log(questionCounter);
+
+                    console.log("question number " + questionCounter);
+                    questionAnswer();
+                    btnRepeat();
                   }
-                } 
+                }
               });
             }
 
@@ -189,19 +191,13 @@
                 btnRepeat();
               }, 10000); // end function
             }
-            
+
             function stop() {
               clearTimeout(counter);
-            
-        }
-
-            
-
-           
+            }
           }); //end of ajax request
         });
       });
-
 
       // dont repeat the same question
       // when 7 questions have passed show result and new text
