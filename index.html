@@ -32,6 +32,7 @@
           <div class="btnDiv">
             <button class="btn btn-dark text-center">Start</button>
           </div>
+          
         </div>
       </div>
     </div>
@@ -41,7 +42,7 @@
        
 
         let queryURL =
-          "https://opentdb.com/api.php?amount=10&type=multiple";
+          "https://opentdb.com/api.php?amount=50&type=multiple";
         // lower the margin bottom of button
         $(".btn").on("click", function() {
           $(".btn").hide();
@@ -59,7 +60,7 @@
             
 
             function questionAnswer() {
-              randomNumber = Math.floor(Math.random() * 10);
+              randomNumber = Math.floor(Math.random() * 50);
               console.log(response);
               console.log(randomNumber);
               var result = response.results[randomNumber].question;
@@ -76,9 +77,8 @@
                 var incorrect = "incorrect";
                 var score = 0;
                 var questionCounter = 0;
-                
 
-                $(".answers").append(
+                var random1 = $(".answers").append(
                   '<input type="radio" name="rbtnCount" value=' +
                     incorrect +
                     ">" +
@@ -86,12 +86,25 @@
                     "</br>"
                 );
               }
-              $(".answers").append(
+
+              randomNumber2 = Math.floor(Math.random() * 2 +1);
+              if (randomNumber2 == "2") {
+                var random2 =  $(".answers").append(
                 '<input type="radio" name="rbtnCount" value=' +
                   correct +
                   ">" +
-                  myJSON3
+                  myJSON3 +
+                  "</br>"
               );
+              } else {
+                var random2 =  $(".answers").prepend(
+                '<input type="radio" name="rbtnCount" value=' +
+                  correct +
+                  ">" +
+                  myJSON3 +
+                  "</br>"
+              );
+              }
               var radioBtn = $('<input type="radio" name="rbtnCount" />');
 
               var myJSON = JSON.stringify(result);
@@ -126,11 +139,12 @@
                       stop();
                       alert("Finish");
                       $(".questionAsked").text("Congratulations");
-                      $(".answers").text("You have " +score+" right answers");
+                      $(".answers").append("You have " +score+" right answers");
+                      $(".answers").append($('<img>',{id:'theImg',src:'../TriviaGame/assets/images/theoffice.gif'}))
 
                   } else {
                   console.log(questionCounter);
-                  $(".answers").append("<h4>Score " + score + "</h4");
+                  
                   console.log("question number "+questionCounter);
                   questionAnswer();
                   btnRepeat();
@@ -147,10 +161,11 @@
                       alert("Finish");
                       $(".questionAsked").text("Congratulations");
                       $(".answers").text("You have " +score+" right answers");
+                      $(".answers").append($('<img>',{id:'theImg',src:'../TriviaGame/assets/images/theoffice.gif'}))
 
                   } else {
                   console.log(questionCounter);
-                  $(".answers").append("<h4>Score " + score + "</h4");
+                  
                   console.log("question number "+questionCounter);
                   questionAnswer();
                   btnRepeat();
